@@ -28,7 +28,13 @@ class ItemModel(models.Model):
     
     def __str__(self):
         return self.id
-
+    
+    def get_min_price(self):
+        return min(self.yahoo_price,self.rakuten_price,self.amazon_price)
+    
+    def get_max_price(self):
+        return max(self.yahoo_price,self.rakuten_price,self.amazon_price)
+        
     class Meta():
         db_table='item'
         
