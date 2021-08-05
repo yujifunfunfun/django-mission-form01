@@ -6,7 +6,7 @@ from ..tables.item import *
 
 
 class ItemTableView(generic.TemplateView):
-    template_name = "item/table.html"
+    template_name = "item/item-table.html"
 
     def get(self, request, *args, **kwargs):
         items = ItemModel.objects.all()
