@@ -10,12 +10,12 @@ class ReviewModel(models.Model):
     title = models.CharField('レビュータイトル',max_length=100)
     content = models.TextField('レビュー内容',max_length=300)
 
-    user_attr = models.CharField('属性',max_length=100)
+    user_attr = models.CharField('属性',max_length=100,null=True)
     posted_at = models.DateField('',null=True)
-    created_at = models.DateTimeField('作成日時',auto_now_add=True)
-    updated_at = models.DateTimeField('更新日時',auto_now=True)
+    created_at = models.DateTimeField('作成日時',auto_now_add=True,null=True)
+    updated_at = models.DateTimeField('更新日時',auto_now=True,null=True)
 
-    item_id = models.ForeignKey(ItemModel,on_delete=models.CASCADE,null=True)
+    item_id = models.ForeignKey(ItemModel,db_column="item_id",on_delete=models.CASCADE,null=True)
     
     class Meta():
         db_table='review'
