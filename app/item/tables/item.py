@@ -52,4 +52,4 @@ class ItemTable(tables.Table):
         orderable = False
 
 
-        fields = ('name', 'thumbnail_url', 'review')  
+        fields = ( 'thumbnail_url','name', 'yahoo_price','rakuten_price','amazon_price','yahoo_review_count','yahoo_star_average','review')  

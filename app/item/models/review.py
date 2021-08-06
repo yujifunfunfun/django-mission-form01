@@ -15,7 +15,7 @@ class ReviewModel(models.Model):
     created_at = models.DateTimeField('作成日時',auto_now_add=True,null=True)
     updated_at = models.DateTimeField('更新日時',auto_now=True,null=True)
 
-    item_id = models.ForeignKey(ItemModel,db_column="item_id",on_delete=models.CASCADE,null=True,related_name='review')
+    item_id = models.ForeignKey(ItemModel,db_column="item_id",verbose_name='レビュー',on_delete=models.CASCADE,null=True,related_name='review')
     
     class Meta():
         db_table='review'
