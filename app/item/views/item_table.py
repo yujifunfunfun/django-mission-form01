@@ -17,15 +17,14 @@ class ItemTableView(generic.TemplateView):
     def post(self, request, *args, **kwargs):
         item_obj = ItemModel.objects.all()
 
+        # 検索キーワード指定
         keyword = self.request.POST['keyword']
         if keyword:
             item_obj = item_obj.filter(Q(name__contains=keyword) | Q(jan__contains=keyword))
 
+        # 詳細検索条件指定
         min_price = self.request.POST['min_price']
         max_price = self.request.POST['max_price']
-        # item_min_price = item_obj.get_min_price()
-        # item_max_price = item_obj.get_max_price()
-
         if min_price:
             item_obj = item_obj.filter(yahoo_price__gte=min_price)
         if max_price:
@@ -41,5 +40,6 @@ class ItemTableView(generic.TemplateView):
 
         table = ItemTable(item_obj)
         table.paginate(page=request.POST.get("page", 1), per_page=25)
+        
         return self.render_to_response({'table': table, 'count': item_obj.count()})
 
