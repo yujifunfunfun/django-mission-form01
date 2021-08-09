@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 load_dotenv(verbose=True)
 
