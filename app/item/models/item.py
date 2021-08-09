@@ -25,3 +25,10 @@ class ItemModel(models.Model):
     class Meta():
         db_table='item'
         
+class User(models.Model):
+    id = models.CharField(max_length=32, default=get_ulid, primary_key=True, editable=True)
+    name = models.CharField('名前', max_length=500, null=True)
+    favorite_item = models.ManyToManyField("ItemModel",default=[],null=True)
+
+    class Meta():
+        db_table='user'

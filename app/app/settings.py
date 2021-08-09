@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'item',
     'users',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'social_django.middleware.SocialAuthExceptionMiddleware',  # これを追加
+
 ]
 
 # カスタムUserを指定
@@ -79,6 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # これを追加
+                'social_django.context_processors.login_redirect', 
             ],
         },
     },
@@ -146,3 +151,23 @@ STATICFILES_DIRS = (
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+SOCIAL_AUTH_TRAILING_SLASH = False
+SOCIAL_AUTH_AUTH0_DOMAIN = 'review.jp.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = 'KXzcP42oJiKKvX640fmcr8X8pNso6aPA'
+SOCIAL_AUTH_AUTH0_SECRET = '97QjcGOKM122udhyEUYl_YvwbJKIOo70T4JKJHPLNAbNIWzVHq3-8FAxDQdIsv2o'
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+    'openid',
+    'profile',
+    'email'
+]
+
+AUTHENTICATION_BACKENDS = {
+    'item.auth0backend.Auth0',
+    'django.contrib.auth.backends.ModelBackend'
+}
+
+LOGIN_URL = '/login/auth0'
+LOGIN_REDIRECT_URL = '/item-table'

@@ -22,10 +22,10 @@ class ItemTable(tables.Table):
 
         <!-- カルーセル実装 -->
         <div id="carouselExampleControls" class="carousel slide" data-ride="false" data-touch='true'>
-            <div class="carousel-inner px-3">
+            <div class="carousel-inner">
                 {% for review in record.review.all %}
                     {% if forloop.first %}
-                        <div class="carousel-item active  px-5">
+                        <div class="carousel-item active">
                             <div> ★{{ review.star }}  </div>
                             <div>{{ review.title }}</div>
                             <div>{{ review.content }}</div>
@@ -51,11 +51,17 @@ class ItemTable(tables.Table):
             </a>
         </div>
         """)
+    favorite_button = tables.TemplateColumn(
+    """
+    <form action="{% url 'item:favorite' record.pk %}" method="get">
+        <button type="submit" name="button" class='text-white bg-primary rounded-pill border-primary py-1 px-2 small'>★</button>
+        {% csrf_token %}
+    </form>        
+    """,verbose_name='お気に入り')
 
     class Meta:
         model = ItemModel
         template_name = 'django_tables2/bootstrap4.html'
         orderable = False
 
-
-        fields = ( 'thumbnail_url','name', 'yahoo_price','rakuten_price','amazon_price','yahoo_review_count','yahoo_star_average','review')  
+        fields = ('thumbnail_url','name', 'yahoo_price','rakuten_price','amazon_price','yahoo_review_count','yahoo_star_average','review','favorite_button')  

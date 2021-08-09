@@ -22,9 +22,11 @@ from .views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('item/', include("item.urls")),
+    path('', include("item.urls")),
     path('users/', include("users.urls")),
-    path('index', IndexView.as_view(), name="index")
+    path('index', IndexView.as_view(), name="index"),
+    path('', include('django.contrib.auth.urls')),
+    path('', include('social_django.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

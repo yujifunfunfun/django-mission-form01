@@ -1,17 +1,22 @@
 from django.views import generic
-
 from ..models.item import *
-
 from ..tables.item import *
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ItemTableView(generic.TemplateView):
+
+class ItemTableView(LoginRequiredMixin,generic.TemplateView):
     template_name = "item/item-table.html"
 
     def get(self, request, *args, **kwargs):
         items = ItemModel.objects.all()
         table = ItemTable(items)
         table.paginate(page=request.GET.get("page", 1), per_page=25)
+        user_id = self.request.user.id
+        if not User.objects.filter(pk=user_id).exists():
+            user = User.objects.create(id=user_id)
+            user.save()
+
         return self.render_to_response({'table': table, 'count': items.count()})
 
     def post(self, request, *args, **kwargs):
@@ -42,4 +47,5 @@ class ItemTableView(generic.TemplateView):
         table.paginate(page=request.POST.get("page", 1), per_page=25)
         
         return self.render_to_response({'table': table, 'count': item_obj.count()})
+
 
