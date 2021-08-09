@@ -28,7 +28,7 @@ class ItemModel(models.Model):
 class User(models.Model):
     id = models.CharField(max_length=32, default=get_ulid, primary_key=True, editable=True)
     name = models.CharField('名前', max_length=500, null=True)
-    favorite_item = models.ManyToManyField("ItemModel",default=[],null=True)
+    favorite_item = models.ManyToManyField("ItemModel",null=True)
 
     class Meta():
         db_table='user'
