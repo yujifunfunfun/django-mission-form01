@@ -18,38 +18,58 @@ class ItemTable(tables.Table):
         .carousel-control-next-icon {
             background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f00' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
         }
+        .carousel-indicators{
+            height:10px;
+        }
+        
+        .carousel-indicators li {
+            border-radius: 50%;
+            margin: 0px 3px;
+            height: 10px;
+            max-width: 10px;
+        }
+        
         </style>
 
         <!-- カルーセル実装 -->
-        <div id="carouselExampleControls" class="carousel slide" data-ride="false" data-touch='true'>
-            <div class="carousel-inner">
+        
+             <div id="carousel{{ record.id }}" class="carousel slide" data-ride="false" data-touch='true'>
+                <ol class="carousel-indicators mb-0">
                 {% for review in record.review.all %}
                     {% if forloop.first %}
+                        <li data-target="#carousel{{ record.id }}" data-slide-to="{{ forloop.counter }}" class="active bg-danger"></li>
+                    {% else %}
+                        <li data-target="#carousel{{ record.id }}" data-slide-to="{{ forloop.counter }}" class="bg-danger"></li>
+                    {% endif %}
+                {% endfor %}
+                </ol>
+                <div class="carousel-inner">
+                 {% for review in record.review.all %}
+                    {% if forloop.first %}
                         <div class="carousel-item active">
-                            <div> ★{{ review.star }}  </div>
-                            <div>{{ review.title }}</div>
+                            <div>★{{ review.star }} </div>
                             <div>{{ review.content }}</div>
                         </div>
                     {% else %}
-                        <div class="carousel-item px-5">
+                        <div class="carousel-item">
                             <div>★{{ review.star }}</div>
-                            <div>{{ review.title }}</div>
                             <div>{{ review.content }}</div>
                         </div>
                     {% endif %}
-                {% endfor %}
+                 {% endfor %}
+                
+                <!-- カルーセル矢印 -->
+                <a class="carousel-control-prev" href="#carousel{{ record.id }}" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel{{ record.id }}" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>  
+                </div>
             </div>
-
-            <!-- カルーセル矢印 -->
-            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
+         
         """)
     favorite_button = tables.TemplateColumn(
     """

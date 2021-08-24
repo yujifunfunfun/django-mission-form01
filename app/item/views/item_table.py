@@ -5,7 +5,7 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ItemTableView(LoginRequiredMixin,generic.TemplateView):
+class ItemTableView(generic.TemplateView):
     template_name = "item/item-table.html"
 
     def get(self, request, *args, **kwargs):
